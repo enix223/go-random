@@ -76,7 +76,7 @@ func TestSampleWithSlice(t *testing.T) {
 }
 
 func TestSampleWithString(t *testing.T) {
-	k := 10
+	k := 5
 	r := Sample(Alphabet, k)
 	s, ok := r.(string)
 	if !ok {

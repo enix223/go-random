@@ -61,9 +61,8 @@ func Sample(population interface{}, k int) interface{} {
 		n = popVal.Len()
 		result = reflect.New(reflect.ArrayOf(k, popVal.Index(0).Type())).Elem()
 	case reflect.String:
-		n = popVal.Len()
-		result = reflect.New(popVal.Type()).Elem()
-		result.SetString(strings.Repeat(" ", k))
+		res := SampleStringSlice(strings.Split(population.(string), ""), k)
+		return strings.Join(res, "")
 	default:
 		panic("population should be type of array, slice or string")
 	}
