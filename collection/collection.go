@@ -106,7 +106,7 @@ func Sample(population interface{}, k int) interface{} {
 
 		for i := 0; i < k; i++ {
 			j := rand.Intn(n)
-			for _, ok := selected[j]; ok; {
+			for _, ok := selected[j]; ok; _, ok = selected[j] {
 				j = rand.Intn(n)
 			}
 			result.Index(i).Set(popVal.Index(j))
@@ -151,8 +151,13 @@ func SampleStringSlice(population []string, k int) []string {
 
 		for i := 0; i < k; i++ {
 			j := rand.Intn(n)
-			for _, ok := selected[j]; ok; {
-				j = rand.Intn(n)
+			for {
+				_, ok := selected[j]
+				if ok {
+					j = rand.Intn(n)
+					continue
+				}
+				break
 			}
 			result = append(result, population[j])
 			selected[j] = struct{}{}

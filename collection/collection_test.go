@@ -331,17 +331,40 @@ func TestRandomStringSliceWithBadParam(t *testing.T) {
 
 // Compare the performance between generic Sample and SampleStringSlice version
 func BenchmarkSample(b *testing.B) {
-	k := 10
+	k := 5
 
 	b.Run("Sample", func(bb *testing.B) {
 		for i := 0; i < bb.N; i++ {
-			Sample(AlphabetSlice, k)
+			Sample(AlphabetDigits, k)
 		}
 	})
 
 	b.Run("SampleStringSlice", func(bb *testing.B) {
 		for i := 0; i < bb.N; i++ {
-			SampleStringSlice(AlphabetSlice, k)
+			SampleStringSlice(strings.Split(AlphabetDigits, ""), k)
+		}
+	})
+
+	b.Run("SampleSlice", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			Sample(AlphabetSlice, k)
+		}
+	})
+}
+
+// Compare the performance between generic Sample and SampleStringSlice version
+func BenchmarkRandom(b *testing.B) {
+	k := 5
+
+	b.Run("Random", func(bb *testing.B) {
+		for i := 0; i < bb.N; i++ {
+			Random(AlphabetDigits, k)
+		}
+	})
+
+	b.Run("RandomStringSlice", func(bb *testing.B) {
+		for i := 0; i < bb.N; i++ {
+			RandomStringSlice(strings.Split(AlphabetDigits, ""), k)
 		}
 	})
 }
